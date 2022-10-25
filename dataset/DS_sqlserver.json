@@ -1,0 +1,20 @@
+{
+	"name": "DS_sqlserver",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SqlServer1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "lab1"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Departments"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
