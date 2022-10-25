@@ -1,0 +1,90 @@
+{
+	"name": "logtableinsert",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get Metadata1",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "DS_sqlserver",
+						"type": "DatasetReference"
+					},
+					"fieldList": [
+						{
+							"value": "@pipeline().DataFactory",
+							"type": "Expression"
+						},
+						{
+							"value": "@pipeline().Pipeline",
+							"type": "Expression"
+						}
+					]
+				}
+			},
+			{
+				"name": "Stored procedure1",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Get Metadata1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "stored procedure",
+						"value": "run"
+					}
+				],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[sp_adflogging]",
+					"storedProcedureParameters": {
+						"datafactory_name": {
+							"value": {
+								"value": "@pipeline().DataFactory",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"pipeline_name": {
+							"value": {
+								"value": "@pipeline().Pipeline",
+								"type": "Expression"
+							},
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "SqlServer1",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"folder": {
+			"name": "lab1"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-10-18T07:08:58Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,25 @@
+{
+	"name": "DS_sinkazgen2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_sinktable",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "lab2"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "lab2"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

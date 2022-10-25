@@ -1,0 +1,9 @@
+{
+	"name": "adfcloudlabpractise",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "a35758ad-725a-43ae-9763-46ece8ea379a",
+		"tenantId": "1ec577e6-104e-4a6a-83e9-e7685f7e19e0"
+	}
+}
