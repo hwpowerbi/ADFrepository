@@ -19,8 +19,21 @@
 						"type": "ExcelSource",
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
+							"recursive": false,
+							"modifiedDatetimeStart": "2022-10-26T00:00:00.458Z",
 							"enablePartitionDiscovery": false
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings",
+							"copyBehavior": "PreserveHierarchy"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
 						}
 					},
 					"enableStaging": false
@@ -28,6 +41,15 @@
 				"inputs": [
 					{
 						"referenceName": "Excel1",
+						"type": "DatasetReference",
+						"parameters": {
+							"Pfilename": "Products"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_sinkoutputfile",
 						"type": "DatasetReference"
 					}
 				]

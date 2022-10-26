@@ -5,10 +5,21 @@
 			"referenceName": "LS_excelsource",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"Pfilename": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Lab 3"
+		},
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
-			"sheetName": "Customers",
+			"sheetName": {
+				"value": "@dataset().Pfilename",
+				"type": "Expression"
+			},
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": "Demo data.xlsx",
