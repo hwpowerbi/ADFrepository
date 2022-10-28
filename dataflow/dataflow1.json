@@ -16,9 +16,9 @@
 			"transformations": [],
 			"scriptLines": [
 				"source(output(",
-				"          Date as string,",
+				"          Date as date 'MM/dd/yyyy',",
 				"          Name as string,",
-				"          Salary as string,",
+				"          Salary as integer '000',",
 				"          Address as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
