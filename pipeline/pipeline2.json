@@ -26,6 +26,12 @@
 				"typeProperties": {
 					"source": {
 						"type": "DelimitedTextSource",
+						"additionalColumns": [
+							{
+								"name": "filepath",
+								"value": "$$FILEPATH"
+							}
+						],
 						"storeSettings": {
 							"type": "AzureBlobFSReadSettings",
 							"recursive": false,
@@ -68,45 +74,6 @@
 						"type": "DatasetReference"
 					}
 				]
-			},
-			{
-				"name": "Delete1",
-				"type": "Delete",
-				"dependsOn": [
-					{
-						"activity": "Copy data1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"dataset": {
-						"referenceName": "DS_sinkazgen2_lab3",
-						"type": "DatasetReference"
-					},
-					"logStorageSettings": {
-						"linkedServiceName": {
-							"referenceName": "LS_lab3textfile",
-							"type": "LinkedServiceReference"
-						},
-						"path": "lab3"
-					},
-					"enableLogging": true,
-					"storeSettings": {
-						"type": "AzureBlobFSReadSettings",
-						"recursive": false,
-						"enablePartitionDiscovery": false
-					}
-				}
 			}
 		],
 		"folder": {
