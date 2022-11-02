@@ -8,6 +8,15 @@
 		"AzureDataLakeStorage1_accountKey": {
 			"value": ""
 		},
+		"AzureDataLakeStorage2_accountKey": {
+			"value": ""
+		},
+		"LS_exceloutputfile_accountKey": {
+			"value": ""
+		},
+		"LS_excelsource_connectionString": {
+			"value": ""
+		},
 		"LS_lab3textfile_accountKey": {
 			"value": ""
 		},
@@ -21,6 +30,12 @@
 			"value": ""
 		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"value": "https://azgen2storagacc.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage2_properties_typeProperties_url": {
+			"value": "https://azgen2storagacc.dfs.core.windows.net/"
+		},
+		"LS_exceloutputfile_properties_typeProperties_url": {
 			"value": "https://azgen2storagacc.dfs.core.windows.net/"
 		},
 		"LS_lab3textfile_properties_typeProperties_url": {
