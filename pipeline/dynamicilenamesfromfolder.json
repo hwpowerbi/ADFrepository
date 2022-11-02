@@ -1,10 +1,10 @@
 {
-	"name": "lab2",
+	"name": "dynamicilenamesfromfolder",
 	"properties": {
 		"activities": [
 			{
-				"name": "Lookup1",
-				"type": "Lookup",
+				"name": "Getfilenamesfromfolder",
+				"type": "GetMetadata",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -15,48 +15,29 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "SqlServerSource",
-						"sqlReaderQuery": "SELECT TABLE_NAME\nFROM INFORMATION_SCHEMA.TABLES\nWHERE TABLE_TYPE = 'BASE TABLE'",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
 					"dataset": {
-						"referenceName": "DS_lookuplab2",
+						"referenceName": "DS_metadatalab4dynamicloadfile",
 						"type": "DatasetReference"
 					},
-					"firstRowOnly": false
-				}
-			},
-			{
-				"name": "Filter1",
-				"type": "Filter",
-				"dependsOn": [
-					{
-						"activity": "Lookup1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"items": {
-						"value": "@activity('Lookup1').output.value",
-						"type": "Expression"
+					"fieldList": [
+						"childItems"
+					],
+					"storeSettings": {
+						"type": "AzureBlobFSReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
 					},
-					"condition": {
-						"value": "@startswith(string(item().TABLE_NAME),'e')",
-						"type": "Expression"
+					"formatSettings": {
+						"type": "DelimitedTextReadSettings"
 					}
 				}
 			},
 			{
-				"name": "ForEach1",
+				"name": "ForEachfilecopy_addtimestamp",
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Filter1",
+						"activity": "Getfilenamesfromfolder",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -65,10 +46,9 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Filter1').output.value",
+						"value": "@activity('Getfilenamesfromfolder').output.childItems",
 						"type": "Expression"
 					},
-					"isSequential": true,
 					"activities": [
 						{
 							"name": "Copy data1",
@@ -81,21 +61,18 @@
 								"secureOutput": false,
 								"secureInput": false
 							},
-							"userProperties": [
-								{
-									"name": "Source",
-									"value": "onlytablee"
-								},
-								{
-									"name": "Destination",
-									"value": "azuredatalake2"
-								}
-							],
+							"userProperties": [],
 							"typeProperties": {
 								"source": {
-									"type": "SqlServerSource",
-									"queryTimeout": "02:00:00",
-									"partitionOption": "None"
+									"type": "DelimitedTextSource",
+									"storeSettings": {
+										"type": "AzureBlobFSReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									},
+									"formatSettings": {
+										"type": "DelimitedTextReadSettings"
+									}
 								},
 								"sink": {
 									"type": "DelimitedTextSink",
@@ -120,11 +97,11 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "DS_sqlserver_copy1",
+									"referenceName": "DS_lab4dynamicloadfile",
 									"type": "DatasetReference",
 									"parameters": {
-										"sourcefilterfilenam": {
-											"value": "@item().TABLE_NAME",
+										"pfilename": {
+											"value": "@item().name",
 											"type": "Expression"
 										}
 									}
@@ -132,8 +109,14 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "DS_sinkazgen2",
-									"type": "DatasetReference"
+									"referenceName": "DS_sinklab4dynamicloadfile_copy1",
+									"type": "DatasetReference",
+									"parameters": {
+										"sinkfilename": {
+											"value": "@concat(replace(item().name,'.txt',''),'_',formatdatetime(UTCNow(),'dd-mm-yyyy'))\n",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}
@@ -142,10 +125,8 @@
 			}
 		],
 		"folder": {
-			"name": "Lab2"
+			"name": "lab4"
 		},
-		"annotations": [],
-		"lastPublishTime": "2022-10-18T07:08:58Z"
-	},
-	"type": "Microsoft.DataFactory/factories/pipelines"
+		"annotations": []
+	}
 }
