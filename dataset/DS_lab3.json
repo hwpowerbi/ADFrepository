@@ -10,6 +10,9 @@
 				"type": "string"
 			}
 		},
+		"folder": {
+			"name": "lab3"
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {

@@ -1,0 +1,9 @@
+{
+	"name": "dynamicilenamesfromfolder",
+	"properties": {
+		"folder": {
+			"name": "lab4"
+		},
+		"annotations": []
+	}
+}
