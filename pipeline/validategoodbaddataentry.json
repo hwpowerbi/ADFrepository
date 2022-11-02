@@ -59,36 +59,12 @@
 						"mappings": [
 							{
 								"source": {
-									"name": "movieId",
+									"name": "movieId\ttitle\tgenres\tfilepath",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "movieId",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "title",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "title",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "genres",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "genres",
+									"name": "movieId\ttitle\tgenres\tfilepath",
 									"type": "String",
 									"physicalType": "String"
 								}
@@ -115,17 +91,31 @@
 				"inputs": [
 					{
 						"referenceName": "DS_sinkazgen2_lab3",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"p_dataset": "movies.txt"
+						}
 					}
 				],
 				"outputs": [
 					{
 						"referenceName": "DS_lab3",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"param": {
+								"value": "@concat(replace(pipeline().parameters.pTriggerFile,'.txt',''), '_', formatDateTime(convertTimeZone(utcnow(),'UTC','Eastern Standard Time'),'yyyy-MM-ddTHHmmss'), '.txt')",
+								"type": "Expression"
+							}
+						}
 					}
 				]
 			}
 		],
+		"parameters": {
+			"pTriggerFile": {
+				"type": "string"
+			}
+		},
 		"folder": {
 			"name": "Lab3"
 		},

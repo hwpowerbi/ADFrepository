@@ -13,17 +13,28 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "split1"
+				},
+				{
+					"name": "derivedColumn1"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
-				"          Date as date 'MM/dd/yyyy',",
+				"          Date as string,",
 				"          Name as string,",
-				"          Salary as integer '000',",
+				"          Salary as string,",
 				"          Address as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> source1"
+				"     ignoreNoFilesFound: false,",
+				"     modifiedBefore: (toTimestamp(1667174400621L))) ~> source1",
+				"source1 split(isNull(  toDate(Date, 'dd-mm-yyyy')),",
+				"     disjoint: false) ~> split1@(ErrorRows, GoodRows)",
+				"split1@GoodRows derive(Filename = 'validatefileschema') ~> derivedColumn1"
 			]
 		}
 	}

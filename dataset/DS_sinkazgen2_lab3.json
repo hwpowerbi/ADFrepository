@@ -5,6 +5,11 @@
 			"referenceName": "LS_sinktable",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"p_dataset": {
+				"type": "string"
+			}
+		},
 		"folder": {
 			"name": "lab2"
 		},
@@ -13,7 +18,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "movies.txt",
+				"fileName": {
+					"value": "@dataset().p_dataset",
+					"type": "Expression"
+				},
 				"fileSystem": "inputlab4"
 			},
 			"columnDelimiter": ",",
