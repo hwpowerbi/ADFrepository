@@ -113,7 +113,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"sinkfilename": {
-											"value": "@concat(replace(item().name,'.txt',''),'_',UTCNow())\n",
+											"value": "@concat(replace(item().name,'.txt',''),'_',formatdatetime(UTCNow(),'dd-mm-yyyy'))\n",
 											"type": "Expression"
 										}
 									}
