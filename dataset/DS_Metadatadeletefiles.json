@@ -1,0 +1,26 @@
+{
+	"name": "DS_Metadatadeletefiles",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_sinktable",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "lab5"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "outputlab4"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
