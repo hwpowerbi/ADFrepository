@@ -97,7 +97,13 @@
 							"inputs": [
 								{
 									"referenceName": "DS_lab4dynamicloadfile",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"pfilename": {
+											"value": "@item().name    ",
+											"type": "Expression"
+										}
+									}
 								}
 							],
 							"outputs": [
