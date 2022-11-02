@@ -110,7 +110,13 @@
 							"outputs": [
 								{
 									"referenceName": "DS_sinklab4dynamicloadfile_copy1",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"sinkfilename": {
+											"value": "@concat(replace(item().name,'.txt',''),'_',formatDateTime(convertTimeZone(utcnow(),'UTC','Eastern Standard Time'),'yyyy-MM-ddTHHmmss'), '.txt')",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}

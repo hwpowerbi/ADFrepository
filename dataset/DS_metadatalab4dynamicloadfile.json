@@ -5,11 +5,6 @@
 			"referenceName": "LS_sinktable",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"pfilename": {
-				"type": "string"
-			}
-		},
 		"folder": {
 			"name": "Lab4"
 		},
@@ -18,10 +13,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": {
-					"value": "@dataset().pfilename",
-					"type": "Expression"
-				},
 				"fileSystem": "inputlab4"
 			},
 			"columnDelimiter": ",",
