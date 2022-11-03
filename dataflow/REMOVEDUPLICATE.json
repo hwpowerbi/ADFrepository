@@ -12,7 +12,22 @@
 					"name": "source1"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_inputlab6duplicateentry",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_inputlab6duplicateentry",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
+				}
+			],
 			"transformations": [
 				{
 					"name": "aggregate1"
@@ -34,7 +49,33 @@
 				"source1 aggregate(groupBy(id),",
 				"     countingid = count()) ~> aggregate1",
 				"aggregate1 split(countingid>1,",
-				"     disjoint: false) ~> split1@(Duplicate, Distict)"
+				"     disjoint: false) ~> split1@(Duplicate, Distict)",
+				"split1@Duplicate sink(allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     input(",
+				"          id as string,",
+				"          Name as string,",
+				"          Salary as string,",
+				"          Address as string",
+				"     ),",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1",
+				"split1@Distict sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          id as string,",
+				"          Name as string,",
+				"          Salary as string,",
+				"          Address as string",
+				"     ),",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink2"
 			]
 		}
 	}
