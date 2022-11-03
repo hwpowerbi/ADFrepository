@@ -1,0 +1,41 @@
+{
+	"name": "REMOVEDUPLICATE",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_inputlab6duplicateentry",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "aggregate1"
+				},
+				{
+					"name": "split1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          id as string,",
+				"          Name as string,",
+				"          Salary as string,",
+				"          Address as string",
+				"     ),",
+				"     allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 aggregate(groupBy(id),",
+				"     countingid = count()) ~> aggregate1",
+				"aggregate1 split(countingid>1,",
+				"     disjoint: false) ~> split1@(Duplicate, Distict)"
+			]
+		}
+	}
+}
