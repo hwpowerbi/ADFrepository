@@ -1,0 +1,67 @@
+{
+	"name": "windowranking",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_windowfunctionlab",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_windowfunctionlab",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "Partitionby"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          id as integer,",
+				"          Name as string,",
+				"          Department as string,",
+				"          Salary as integer,",
+				"          Address as string",
+				"     ),",
+				"     allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 window(over(Department),",
+				"     asc(Salary, true),",
+				"     Rank = denseRank()) ~> Partitionby",
+				"Partitionby sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          id as string,",
+				"          Name as string,",
+				"          Department as string,",
+				"          Salary as string,",
+				"          Address as string",
+				"     ),",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          id,",
+				"          Name,",
+				"          Department,",
+				"          Salary,",
+				"          Address",
+				"     )) ~> sink1"
+			]
+		}
+	}
+}
