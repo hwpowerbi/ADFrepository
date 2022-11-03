@@ -14,19 +14,12 @@
 			],
 			"sinks": [
 				{
-					"dataset": {
-						"referenceName": "DS_windowfunctionlab",
-						"type": "DatasetReference"
-					},
-					"name": "sink1"
+					"name": "sink2"
 				}
 			],
 			"transformations": [
 				{
 					"name": "Partitionby"
-				},
-				{
-					"name": "flowlet1"
 				}
 			],
 			"scriptLines": [
@@ -43,28 +36,10 @@
 				"source1 window(over(Department),",
 				"     asc(Salary, true),",
 				"     Rank = denseRank()) ~> Partitionby",
-				"Partitionby compose(composition: 'undefined') ~> flowlet1@()",
-				"flowlet1 sink(allowSchemaDrift: true,",
+				"Partitionby sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     input(",
-				"          id as string,",
-				"          Name as string,",
-				"          Department as string,",
-				"          Salary as string,",
-				"          Address as string",
-				"     ),",
-				"     umask: 0022,",
-				"     preCommands: [],",
-				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     mapColumn(",
-				"          id,",
-				"          Name,",
-				"          Department,",
-				"          Salary,",
-				"          Address",
-				"     )) ~> sink1"
+				"     skipDuplicateMapOutputs: true) ~> sink2"
 			]
 		}
 	}
