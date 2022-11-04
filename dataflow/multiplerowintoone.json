@@ -1,0 +1,38 @@
+{
+	"name": "multiplerowintoone",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_inputlab6Multiplerowintoone",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "aggregate1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          id as string,",
+				"          Name as string,",
+				"          Department as string,",
+				"          Salary as string,",
+				"          Skill as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 aggregate(groupBy(id,",
+				"          Name),",
+				"     New_Skill = ERROR_FUNCTION('')) ~> aggregate1"
+			]
+		}
+	}
+}
