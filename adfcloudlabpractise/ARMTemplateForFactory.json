@@ -795,6 +795,55 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DS_inputlab6Multiplerowintoone')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_sinktable",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Multiplerowintoone.txt",
+						"fileSystem": "inputlab6"
+					},
+					"columnDelimiter": "\t",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "id",
+						"type": "String"
+					},
+					{
+						"name": "Name",
+						"type": "String"
+					},
+					{
+						"name": "Department",
+						"type": "String"
+					},
+					{
+						"name": "Salary",
+						"type": "String"
+					},
+					{
+						"name": "Skill",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_sinktable')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DS_inputlab6duplicateentry')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1597,6 +1646,72 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/DS_lab3')]",
 				"[concat(variables('factoryId'), '/datasets/DS_sinklab4dynamicloadfile_copy1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/multiplerowintoone')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "DS_inputlab6Multiplerowintoone",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DS_windowfunctionlab",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "aggregate1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          id as string,",
+						"          Name as string,",
+						"          Department as string,",
+						"          Salary as string,",
+						"          Skill as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source1",
+						"source1 aggregate(groupBy(id,",
+						"          Name),",
+						"     New_Skill = collect(Skill)) ~> aggregate1",
+						"aggregate1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          id as string,",
+						"          Name as string,",
+						"          Department as string,",
+						"          Salary as string,",
+						"          Address as string",
+						"     ),",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_inputlab6Multiplerowintoone')]",
+				"[concat(variables('factoryId'), '/datasets/DS_windowfunctionlab')]"
 			]
 		},
 		{
