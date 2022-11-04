@@ -801,7 +801,7 @@
 								"referenceName": "DS_sinkazgen2_lab3",
 								"type": "DatasetReference",
 								"parameters": {
-									"p_dataset": "movies.txt"
+									"p_dataset": "river.txt"
 								}
 							}
 						],
@@ -817,6 +817,37 @@
 								}
 							}
 						]
+					},
+					{
+						"name": "Web1",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Copy data1",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://prod-15.centralus.logic.azure.com:443/workflows/decf1699f54b4396940458530749fae1/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=OjAaYmoTu0sY1384X84IJ2PgKoDLsf4hZLRhZUN7ALA",
+							"method": "POST",
+							"headers": {
+								"Content-Type": "application/json"
+							},
+							"body": {
+								"value": "{\n   \"Pipeline\":\"@{pipeline().Pipeline}\",\n   \"ErrorMessage\":\"@{activity('Copy data1').output.ErrorMessage}\"\n}",
+								"type": "Expression"
+							}
+						}
 					}
 				],
 				"policy": {
