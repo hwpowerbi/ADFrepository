@@ -31,7 +31,7 @@
 				"     ignoreNoFilesFound: false) ~> source1",
 				"source1 aggregate(groupBy(id,",
 				"          Name),",
-				"     New_Skill = ERROR_FUNCTION('')) ~> aggregate1"
+				"     New_Skill = collect(Skill)) ~> aggregate1"
 			]
 		}
 	}
