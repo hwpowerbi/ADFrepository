@@ -1,0 +1,30 @@
+{
+	"name": "Comparesource_destinationdata",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SqlServer1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Lab6"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "Department_ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Department_Name",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Departments"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

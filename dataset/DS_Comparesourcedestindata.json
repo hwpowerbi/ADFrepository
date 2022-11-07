@@ -1,0 +1,36 @@
+{
+	"name": "DS_Comparesourcedestindata",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_sinktable",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Lab6"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "comparesource_destination.csv",
+				"fileSystem": "inputlab7"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Department_ID",
+				"type": "String"
+			},
+			{
+				"name": "Department_Name",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
