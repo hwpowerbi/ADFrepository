@@ -844,7 +844,7 @@
 								"Content-Type": "application/json"
 							},
 							"body": {
-								"value": "{\n   \"Pipeline\":\"@{pipeline().Pipeline}\",\n   \"ErrorMessage\":\"@{activity('Copy data1').output.ErrorMessage}\"\n}",
+								"value": "{\n    \"Pipeline\":\"@{pipeline().Pipeline}\",\n    \"ErrorMessage\":\"@{activity('Copy data1').Error.Message}\"\n}",
 								"type": "Expression"
 							}
 						}
