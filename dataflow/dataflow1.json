@@ -1,0 +1,39 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Comparesource_destinationdata",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "filter1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Department_ID as integer,",
+				"          Department_Name as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source1",
+				"filter1 derive(column1 = iif(in(columnNames(),'Department_id'),true(),iif(in(columnNames(),'Department_Name'),true(),false()))\r",
+				") ~> derivedColumn1",
+				"source1 filter(Department_ID!=10) ~> filter1"
+			]
+		}
+	}
+}
