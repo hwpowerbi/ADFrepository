@@ -49,7 +49,7 @@
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> Target",
 				"source(output(",
-				"          Department_ID as integer,",
+				"          Department_ID as string,",
 				"          Department_Name as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
