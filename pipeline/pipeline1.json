@@ -27,6 +27,9 @@
 				}
 			}
 		],
+		"folder": {
+			"name": "Lab6"
+		},
 		"annotations": []
 	}
 }
